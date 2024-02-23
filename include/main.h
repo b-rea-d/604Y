@@ -35,7 +35,10 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "lemlib/api.hpp"
+#include "timer.hpp"
 #include "autoFunctions.hpp"
+
 
 /**
  * You should add more #includes here
@@ -52,7 +55,7 @@
  * namespace.
  */
 using namespace pros;
-// using namespace pros::literals;
+//using namespace pros::literals;
 // using namespace okapi;
 
 /**
@@ -88,6 +91,8 @@ extern Motor Intake1;
 extern Motor Intake2;
 extern ADIDigitalOut Wing;
 extern ADIDigitalOut Hang;
-extern Imu imu; 
+extern Imu imu;
+extern Rotation odomVerticalPod; 
 extern Controller master;
+extern ADIDigitalOut AWP;
 #endif  // _PROS_MAIN_H_
