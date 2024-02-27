@@ -95,4 +95,5 @@ extern Imu imu;
 extern Rotation odomVerticalPod; 
 extern Controller master;
 extern ADIDigitalOut AWP;
+extern Motor Cata2;
 #endif  // _PROS_MAIN_H_

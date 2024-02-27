@@ -2,14 +2,14 @@
 #include <algorithm>
 #include <cstddef>
 
-Motor Lf(-3, pros::E_MOTOR_GEARSET_06); //number (06) is the cartridge
-Motor Lf2(-4, pros::E_MOTOR_GEARSET_06);
-Motor Lb (-5, E_MOTOR_GEARSET_06);
-Motor Rf(8, E_MOTOR_GEARSET_06);
+Motor Lf(-8, pros::E_MOTOR_GEARSET_06); //number (06) is the cartridge
+Motor Lf2(-13, pros::E_MOTOR_GEARSET_06);
+Motor Lb (-12, E_MOTOR_GEARSET_06);
+Motor Rf(17, E_MOTOR_GEARSET_06);
 Motor Rf2 (9, E_MOTOR_GEARSET_06);
 Motor Rb (10, E_MOTOR_GEARSET_06);
-
-Motor Cata (-20, E_MOTOR_GEARSET_36);
+Motor Cata2 (-15);
+Motor Cata (14, E_MOTOR_GEARSET_18);
 
 Motor Intake1 (2, E_MOTOR_GEARSET_06);
 
@@ -22,8 +22,8 @@ ADIDigitalOut AWP (6);
 
 Controller master(E_CONTROLLER_MASTER);
 //sensor ports
-Rotation odomVerticalPod (6, false);
-Imu imu (21);
+Rotation odomVerticalPod (5, false);
+Imu imu (3);
 //motor groups
 pros::MotorGroup left_side_motors({Lf, Lf2, Lb});
 pros::MotorGroup right_side_motors({Rf, Rf2, Rb});
@@ -329,83 +329,47 @@ void competition_initialize() {}
 //   //this is skills auto
 
 
-// chassis.setPose(-49.5, -58, 152); //set the position 
-// chassis.follow(skills1_txt, 20, 1500, false); //score the first 2 triballs 
-// chassis.moveToPose(-58.7, -40, 157.5, 1500, {true, 20}, true);//go back
+chassis.setPose(-49.5, -58, 152); //set the position 
+chassis.follow(skills1_txt, 20, 2000, false);//push
+chassis.moveToPose (-57.1, -38.2, 194, 1000, {true, 20, .6, 127, 100});//forward
+chassis.moveToPose (-57.1, -38.2, 174,1000, {true, 20, .6, 127, 100}); //turn to align with mathcload
+chassis.moveToPose (-57.1, -49.7, 154.9, 2000, {true, 20, .6, 80, 100}); //move it forward on maatchload bar
+chassis.moveToPose (-65, -45.6, 80, 5000, {true, 20.6, 127, 100});//go to cata position
+Intake1=-127;
+chassis.moveToPose (-5, -44.6, 97.6, 1500, {true, 25, .6, 127, 100}); //go forward
+chassis.moveToPose (35, -44.6, -156, 700, {false, 25, .6, 127, 100});//turn so back faces
+Intake1 = 0;
+chassis.moveToPose (16.5, 4,-156, 2000, {false, 36, 0, 127, 100});//go forward, descoree all triballs
 
+chassis.moveToPose (16.5, 4, -247.6, 2000, {false, 25, .6, 127, 100}); //turn so it can go back
+ chassis.moveToPose (-12.1, 51.2,-247.6, 2000, {false, 25, 0, 127, 100}); //go back
+ chassis.moveToPose(-12.1, 51.2, -113, 1000, {false, 20, .6, 127, 100}); //turnto align with matchload bar
+chassis.moveToPose (2.4, 51.2, -113, 1000, {false, 20, .6, 127, 100});//move f
+chassis.moveToPose(2.4, 51.2, -71.5, 1000, {false, 20, .6, 127, 100});//turn so back faces front and it can go forrward
+chassis.moveToPose (71.2, 13, -69.2, 1000, {false, 20, 0, 127, 100}); //go to other side
+chassis.moveToPose (71.2, 13, -21.6, 1000, {false, 20, .6, 127, 100}); //turn to align to the othere side
+chassis.moveToPose (74.7, -9.5, 19.7, 1000, {false, 20, .6, 127, 100}); //push
+chassis.moveToPose(80.5, 3.8, 20.3,2000, {true, 20, 0, 127, 100});//go back
 
-//  chassis.moveToPose(-82, -40, 80,500, {.forwards = false,.chasePower = 25, .lead = .6}); //going to cata position
-// Cata = 127;
-// delay (28300);
-// Cata = 127;
-// chassis.moveToPose (-56, -60, -22, 2000, {false, 25});// turn to align with bar
-// chassis.moveToPose (-54.6, -65, -66.4, 1000, {false});//go back to descore
-// // chassis.waitUntil(8);
-// // AWP.set_value(1);
-// // chassis.waitUntil(14);
-// // AWP.set_value (0);
-// // chassis.waitUntilDone();
-//  chassis.moveToPose (15.2, -100, -67.2, 2000, {false}); //go to the other side 105.9
-// chassis.moveToPose (59, -68, -154, 2000,{false, 25, .3 });//aligning with matchload
-//  Cata = 0;
-// Intake1=-127;
-
-// // wings (1);
-// chassis.moveToPose (45, -87, -158, 1000, {true, 25}); //go back
-// // wings (0);
-// chassis.moveToPoint(59, -70, 1000, false, 127 ); // push
-// chassis.moveToPose (45, -87, -158, 1000, {true, 25}); //go back
-// chassis.moveToPose (34.5, -81.9,  -29, 1000, {true, 25}); //turn so that it can go forward
-// Intake1 = 0;
-// chassis.moveToPose (8, -46.1, -29, 1000, {true, 25}); //move forward
-// chassis.moveToPose (9.3, -47.1, 372.7, 500, {true, 25}); //turn
-// chassis.moveToPose (-2.5, -47, -42, 500, {false, 25}); //move forward
-//  chassis.moveToPose (13.2, -47, 103.8, 500, {true, 25}); //turn
-// //wings (1);
-// Intake1 = -127;
-// chassis.moveToPose (56,-47, 106, 1700, {true, 25, .6, 127, 100}); //push
-// chassis.moveToPose (9.5, -30.98, 107.6, 1000, {false, 25});//go back
-// //wings (0); 
-// Intake1 = 0;
-// chassis.moveToPose (7.07, -32.5, 20.3, 500, {true, 25});//turn **********
-// chassis.moveToPose (7.07, -24.5, 18.2, 500, {true, 25});//move forward
-// chassis.moveToPose (7.07, -21.8, 108.2, 500, {true, 25});//turn
-// Intake1 = -127;
-// chassis.moveToPose (50, -31.7, 108.2, 1700, {true, 25, .6, 127, 100});//push
-// wings (1);
-// Intake1 = 0;
-// chassis.moveToPose (13.5, -22.4, 108.2, 1000, {false, 25});//go back
-// wings (0);
-// chassis.moveToPose (11.5, -23.1, 17.97, 500, {true, 25});//turn ****
-//  chassis.moveToPose (13.4, -16.8, 17.97, 500, {true, 25});//move forward
-//  chassis.moveToPose (17.9, -12.6, 108.8, 500, {true, 25});//turn
-// chassis.moveToPose (50, -22.9, 110.6, 2000, {true, 25, .6, 127, 100});//push
-//  wings (1);
-// chassis.moveToPose (32.9, -9, 110.4, 1000, {false, 25});//moveback
-// wings (0);
-// chassis.moveToPose (32.9, -9, -475.6, 500, {false, 25});//turnso back is 
-// chassis.moveToPose (53.9  , 4.6, 215, 1000, {false, 25, .6, 127, 100});//move it forward so touches matchload bar
-// chassis.moveToPose (61, 19.3, 215, 1000, {false, 25});//touch mathcload
-// //  wings (1);
-// chassis.moveToPose (54.22, 12.5, 325, 100, {false, 25});//turn to touch matchload
-// // wings (0);
-// chassis.moveToPose (70, 0.1, 325 , 100, {false, 25});//go forward on matchload bar
-//  chassis.moveToPose (70, -3.6, 370.8, 500, {.forwards = false, .chasePower = 25, .lead = 0.2});//turn to push
-//  chassis.moveToPose (70,  -25,373.9, 1500, {false, 25, .6, 127, 100}); //push
-//  chassis.moveToPose (60.3,  2 ,373.9, 1500, {true, 25, .6, 127, 100}); //go back
-//    chassis.moveToPose (60.3,  -25,373.9, 1500, {false, 25, .6, 127, 100}); //push
-//     chassis.moveToPose (60.3,  2 ,373.9, 1500, {true, 25, .6, 127, 100}); //go back
-//    chassis.moveToPose (60.3,  -25,373.9, 1500, {false, 25, .6, 127, 100}); //push
-//     chassis.moveToPose (60.3,  2 ,373.9, 1500, {true, 25, .6, 127, 100}); //go back
-// chassis.moveToPose (68, -5.47, 355.3, 2000, {false, 20, .6, 127, 100}); //push
-// chassis.moveToPose (70,4.6, 7, 500, {true, 25, .6, 127, 100}); //go back
-// chassis.moveToPose (70, -5.47, 7, 2000, {false, 25, .6, 127, 100}); //push
-// chassis.moveToPose (70,4.6, 7, 1000, {true, 25, .6, 127, 100}); //go back
-
-
-
-
-
+chassis.moveToPose (80.5, 3.8, 118.5, 2000, {false, 20, .6, 127, 100}); //turn
+chassis.moveToPose (35.1, 2.2, 118.5, 2000, {false, 20, 0, 127, 100}); //go back
+chassis.moveToPose (57.3, -15, 118.5, 2000, {true,25, 0, 127, 100}); //push
+chassis.moveToPose (57.3, -15, 69, 2000, {false, 25, 0, 127, 100});//turn to go back
+chassis.moveToPose (28.3, -25, 69, 2000, {false, 25, 0.3, 127, 100});//go back
+chassis.moveToPose (28.3, -25, 107.5, 2000, {true, 25, 0, 127, 100});//turn
+chassis.moveToPose (55.3, -25, 110, 2000, {true, 35, 0, 127, 100}); //push 2
+chassis.moveToPose (21.3, -38.6, 79.6, 2000, {false, 20, 0, 127, 100});//go back
+chassis.moveToPose (21.3, -38.6, 107, 2000, {true, 20, 0, 127, 100}); //turn
+chassis.moveToPose (51, -38.6, 107, 2000, {true, 35, 0, 127, 100});//push 3
+chassis.moveToPose (33.3, -38.6, 107, 2000, {false, 25, 0, 127, 100});//go back
+chassis.moveToPose (23.1, -48, -33, 2000, {false, 25, 0, 127, 100});//turn
+chassis.moveToPose (32.8, -90.6,-33, 2000, {false, 25, 0, 127, 100});//go to matchload bar
+chassis.moveToPose (32.8, -90.6, -123, 2000, {false, 25, 0, 127, 100});//turn to align with matchload
+chassis.moveToPose (59.3, -90.6, -103, 2000, {false, 25, 0, 127, 100});//align forward matchload
+chassis.moveToPose (61.2, -90.6, -142, 2000, {false, 25, 0, 127, 100});//turn too push
+chassis.moveToPose (72.8, -76.1, -157, 2000, {false, 25, 0, 127, 100});//push
+chassis.moveToPose (52, -90.3, -112, 2000, {true, 25, 0, 127, 100});//go back on matchload bar
+chassis.moveToPose (6.5, -87.8, -69, 2000, {true, .4, 127, 100}); //go hang
 // // wings (1);
 // chassis.moveToPose (11.04, -44.9, 422.2, 2000, {true, 20, .6, 127, 100}); //turn to push
 // delay (1000);
@@ -457,40 +421,40 @@ chassis.moveToPose (16.834, -3.375, 109.370,2000);*/
 	// moveForward(50000);
 
 
-//Offensive 
-Intake1 = 127;
-delay (100);
-Intake1 = 0;
-wings (1);
-delay (500);
-wings (0);
-chassis.setPose(55, -40, -28.5);
-chassis.moveToPose (29.5, 17, -19.4,1000, {true, 25, .3});//go for middle triball
-Intake1 = 127;
-chassis.moveToPose (29.5, 17, 95.2, 700);//turn
-chassis.moveToPose (70, 17, 95.2, 2000, {true, 25, .6, 127, 100});//push hmiddle triball and the other one
-wings (1);
-Intake1 = 0;
-chassis.moveToPose (64.6, 17, 248.9, 700, {true, 25});//turn right
-wings(0);
-Intake1 = 127;
-chassis.moveToPose (35.8, -3, 248.9, 1000, {true, 20});//move forwardd to get acorn
+// //Offensive 
+// Intake1 = 127;
+// delay (100);
+// Intake1 = 0;
+// wings (1);
+// delay (500);
+// wings (0);
+// chassis.setPose(55, -40, -28.5);
+// chassis.moveToPose (29.5, 17, -19.4,1000, {true, 25, .3});//go for middle triball
+// Intake1 = 127;
+// chassis.moveToPose (29.5, 17, 95.2, 700);//turn
+// chassis.moveToPose (70, 17, 95.2, 2000, {true, 25, .6, 127, 100});//push hmiddle triball and the other one
+// wings (1);
+// Intake1 = 0;
+// chassis.moveToPose (64.6, 17, 248.9, 700, {true, 25});//turn right
+// wings(0);
+// Intake1 = 127;
+// chassis.moveToPose (35.8, -3, 248.9, 1000, {true, 20});//move forwardd to get acorn
 
-chassis.moveToPose (40, -3.9, 105, 700, {true, 20});//turn left 
-chassis.moveToPose (48, -3.9, 105, 700 ,{true, 20});//move forward and outtake
-Intake1 = -100;
-chassis.moveToPose (48, -15, -39, 700, {false, 20});// chassis.moveToPose (40, -8.9, -54.6, 2000); //spin so back is facing back
-Intake1 = 0;
-chassis.moveToPose (61.9, -42.1, -36.3, 1500, {false, 20});//go back to touch matchload
-chassis.moveToPose (56, -44, 225.5, 500, {false});//turn for matchload
-chassis.moveToPose (56, -44, -125, 700, {false, 10, .6, 100, 80});//move back
-AWP.set_value(1);
-chassis.moveToPose(75,-32.8, -149.9, 1000, {false, 7, .4, 100, 80});// descore
-  chassis.moveToPose (85, -16.4, -172, 2000, {false, 20, .6, 100, 80}); //push
- AWP.set_value (0);
- chassis.moveToPoint (85, -25, 2000, true, 127); //go back
-   chassis.moveToPoint (85, -16.4, 2000, false, 127); //push
- chassis.moveToPoint (85, -25, 2000, true, 127); //go back
+// chassis.moveToPose (40, -3.9, 105, 700, {true, 20});//turn left 
+// chassis.moveToPose (48, -3.9, 105, 700 ,{true, 20});//move forward and outtake
+// Intake1 = -100;
+// chassis.moveToPose (48, -15, -39, 700, {false, 20});// chassis.moveToPose (40, -8.9, -54.6, 2000); //spin so back is facing back
+// Intake1 = 0;
+// chassis.moveToPose (61.9, -42.1, -36.3, 1500, {false, 20});//go back to touch matchload
+// chassis.moveToPose (56, -44, 225.5, 500, {false});//turn for matchload
+// chassis.moveToPose (56, -44, -125, 700, {false, 10, .6, 100, 80});//move back
+// AWP.set_value(1);
+// chassis.moveToPose(75,-32.8, -149.9, 1000, {false, 7, .4, 100, 80});// descore
+//   chassis.moveToPose (85, -16.4, -172, 2000, {false, 20, .6, 100, 80}); //push
+//  AWP.set_value (0);
+//  chassis.moveToPoint (85, -25, 2000, true, 127); //go back
+//    chassis.moveToPoint (85, -16.4, 2000, false, 127); //push
+//  chassis.moveToPoint (85, -25, 2000, true, 127); //go back
   
   
 
@@ -538,10 +502,17 @@ void opcontrol() {
 	int Forward = master.get_analog(ANALOG_RIGHT_Y);
 	int Turn = master.get_analog(ANALOG_RIGHT_X) * .80;
 	powerDrive(Forward,Turn);
-	
-	
 	if (master.get_digital(DIGITAL_B)){
-		Cata = 127;
+		Cata2 = 100;
+
+
+	} 
+
+	else{
+		Cata2 = 0;
+	}
+	if (master.get_digital(DIGITAL_B)){
+		Cata = 100;
 
 
 	} 
@@ -551,7 +522,7 @@ void opcontrol() {
 	}
 	
 	if (master.get_digital(DIGITAL_R1)){
-		Intake1 = -127;
+		Intake1 = 127;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	}
